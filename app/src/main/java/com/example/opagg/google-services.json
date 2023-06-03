@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "434965617804",
+    "project_id": "opagg-10cd1",
+    "storage_bucket": "opagg-10cd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434965617804:android:207ab61b7b10164bcb2fa9",
+        "android_client_info": {
+          "package_name": "com.example.opagg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPD18ds8KXZsFiafRj8YOTmrRlnPwmYsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
