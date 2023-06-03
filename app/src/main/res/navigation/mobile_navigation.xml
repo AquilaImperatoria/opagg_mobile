@@ -6,16 +6,16 @@
     app:startDestination="@+id/navigation_auth">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.opagg.ui.home.HomeFragment"
+        android:id="@+id/navigation_map"
+        android:name="com.example.opagg.ui.map.MapFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_map" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.opagg.ui.addnew.DashboardFragment"
+        android:id="@+id/navigation_addnew"
+        android:name="com.example.opagg.ui.addnew.AddnewFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_addnew" />
 
 
     <fragment

@@ -1,4 +1,4 @@
-package com.example.opagg.ui.home;
+package com.example.opagg.ui.map;
 
 
 import androidx.annotation.Nullable;
@@ -11,12 +11,12 @@ import androidx.lifecycle.ViewModel;
 import com.yandex.mapkit.geometry.Point;
 
 
-public class HomeViewModel extends ViewModel {
+public class MapViewModel extends ViewModel {
 
     private final SavedStateHandle state;
     private static MutableLiveData<Point> pointContainer = null;
 
-    public HomeViewModel(SavedStateHandle state) {
+    public MapViewModel(SavedStateHandle state) {
         this.state = state;
 
         pointContainer = state.getLiveData("point");

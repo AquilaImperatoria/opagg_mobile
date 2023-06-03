@@ -1,11 +1,8 @@
-package com.example.opagg.ui.home;
+package com.example.opagg.ui.map;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,16 +12,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.UiThread;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -34,20 +27,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.opagg.Place;
 import com.example.opagg.R;
 import com.example.opagg.RetrofitManager;
-import com.example.opagg.databinding.FragmentHomeBinding;
-import com.example.opagg.databinding.PopupBinding;
+import com.example.opagg.databinding.FragmentMapBinding;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.GeoObjectCollection;
 import com.yandex.mapkit.MapKit;
 import com.yandex.mapkit.MapKitFactory;
-import com.yandex.mapkit.geometry.Circle;
 import com.yandex.mapkit.geometry.Point;
 import com.yandex.mapkit.layers.ObjectEvent;
-import com.yandex.mapkit.map.CameraListener;
 import com.yandex.mapkit.map.CameraPosition;
-import com.yandex.mapkit.map.CameraUpdateReason;
-import com.yandex.mapkit.map.CircleMapObject;
-import com.yandex.mapkit.map.Map;
 import com.yandex.mapkit.map.MapObject;
 import com.yandex.mapkit.map.MapObjectCollection;
 import com.yandex.mapkit.map.MapObjectTapListener;
@@ -65,17 +52,13 @@ import com.yandex.mapkit.user_location.UserLocationView;
 import com.yandex.runtime.Error;
 import com.yandex.runtime.image.ImageProvider;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment implements UserLocationObjectListener, Session.SearchListener {
+public class MapFragment extends Fragment implements UserLocationObjectListener, Session.SearchListener {
 
     private EditText searchEdit;
 
@@ -83,7 +66,7 @@ public class HomeFragment extends Fragment implements UserLocationObjectListener
     private SearchManager searchManager;
     private Session searchSession;
     private CameraPosition cameraPosition;
-    private FragmentHomeBinding binding;
+    private FragmentMapBinding binding;
 
     private RetrofitManager retrofitManager;
 
@@ -95,7 +78,7 @@ public class HomeFragment extends Fragment implements UserLocationObjectListener
 
     private UserLocationLayer userLocationLayer;
 
-    private HomeViewModel homeViewModel;
+    private MapViewModel mapViewModel;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -103,14 +86,14 @@ public class HomeFragment extends Fragment implements UserLocationObjectListener
         SearchFactory.initialize(getContext());
         searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED);
 
-        homeViewModel =
-                new ViewModelProvider(getActivity()).get(HomeViewModel.class);
+        mapViewModel =
+                new ViewModelProvider(getActivity()).get(MapViewModel.class);
 
         retrofitManager = RetrofitManager.getInstance();
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentMapBinding.inflate(inflater, container, false);
 
-//        View v = inflater.inflate(R.layout.fragment_home, null);
+//        View v = inflater.inflate(R.layout.fragment_Map, null);
 //        MapView mapview = (MapView) v.findViewById(R.id.mapview);
         View root = binding.getRoot();
         searchEdit = (EditText) binding.search;
@@ -129,7 +112,7 @@ public class HomeFragment extends Fragment implements UserLocationObjectListener
         userLocationLayer.setHeadingEnabled(true);
         userLocationLayer.setObjectListener(this);
 
-        homeViewModel.getPoint().observe(getViewLifecycleOwner(), new Observer<Point>() {
+        mapViewModel.getPoint().observe(getViewLifecycleOwner(), new Observer<Point>() {
             @Override
             public void onChanged(Point point) {
                 cameraPosPoint = point;
@@ -157,7 +140,7 @@ public class HomeFragment extends Fragment implements UserLocationObjectListener
                 List<Place> results = response.body();
                 for (int i = 0; i < results.size(); i++) {
                     Place cur = results.get(i);
-                      HomeFragment.this.createTappableCircle(cur);
+                      MapFragment.this.createTappableCircle(cur);
 //                    mapview.getMap().getMapObjects().addPlacemark(mappoint);
                 }
             }
@@ -297,7 +280,7 @@ public class HomeFragment extends Fragment implements UserLocationObjectListener
             if (cameraPosition != null && !camPosSet) {
                 camPosSet = true;
                 CameraPosition finalPosition = new CameraPosition(cameraPosition.getTarget(), 18, cameraPosition.getAzimuth(), cameraPosition.getTilt());
-                homeViewModel.setPoint(cameraPosition.getTarget());
+                mapViewModel.setPoint(cameraPosition.getTarget());
                 mapview.getMap().move(
                         finalPosition,
                         new Animation(Animation.Type.SMOOTH, 1),

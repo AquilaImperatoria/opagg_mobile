@@ -14,24 +14,24 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.opagg.Place;
 import com.example.opagg.RetrofitManager;
-import com.example.opagg.databinding.FragmentDashboardBinding;
+import com.example.opagg.databinding.FragmentAddnewBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DashboardFragment extends Fragment {
+public class AddnewFragment extends Fragment {
 
     private RetrofitManager retrofitManager;
-    private FragmentDashboardBinding binding;
+    private FragmentAddnewBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         retrofitManager = RetrofitManager.getInstance();
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        AddnewViewModel addnewViewModel =
+                new ViewModelProvider(this).get(AddnewViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentAddnewBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         Button postbutton = (Button) binding.button;
 
@@ -45,7 +45,6 @@ public class DashboardFragment extends Fragment {
                     @Override
                     public void onResponse(Call<Place> call, Response<Place> response) {
                         Toast.makeText(getContext(), "success", Toast.LENGTH_LONG).show();
-                        binding.textDashboard.setText(response.body().getAdress());
                     }
 
                     @Override
